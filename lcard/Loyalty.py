@@ -3,7 +3,7 @@ import requests as req
 import os
 
 # GLi URL
-PATH = "http://127.0.0.1:8000/api/" # PRINCIPAL PATH
+PATH = "https://loyalty-card-project.000webhostapp.com/api/" # PRINCIPAL PATH
 
 LOGINURL = "authenticate"
 COMPANYURL = "company/info"

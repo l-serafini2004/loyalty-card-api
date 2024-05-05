@@ -25,37 +25,37 @@ class LoyCard:
         # Verifichiamo se le credenziali passate sono corrette
         response = req.post(PATH + LOGINURL, self.data)
 
+
+
         # Se il login va a buon fine, settiamo il token --> altrimenti esci con errore
+
         if response.status_code == 200:
-            json_data = response.json()
-            self.token = "Bearer " + json_data['data']['token']
+            try:
+                json_data = response.json()
+                self.token = "Bearer " + json_data['data']['token']
 
-            # Creiamo un file e salviamone le informazioni
-            if not os.path.exists("option.txt"):
-                with open("option.txt", "w") as file:
-                    file.write(data["email"])
-                    file.write("\n")
-                    file.write(data["password"])
-                    file.write("\n")
-                    file.write(data["api_token"])
-                    file.write("\n")
-
-        else:
-            print("Error code: " + str(response.status_code))
-            print("Error: " + response.json()['message'])
-            exit(1)
+                # Creiamo un file e salviamone le informazioni
+                if not os.path.exists("option.txt"):
+                    with open("option.txt", "w") as file:
+                        file.write(data["email"])
+                        file.write("\n")
+                        file.write(data["password"])
+                        file.write("\n")
+                        file.write(data["api_token"])
+                        file.write("\n")
+            except:
+                print("Something was wrong")
+                exit(1)
 
         # Autorizzazione
         self.auth = {"Authorization":self.token}
-
-
 
     # DATI DELLA COMPANY
     def infoCompany(self):
         # Creo la richiesta
         company = req.get(PATH + COMPANYURL, headers=self.auth)
 
-        if(company.status_code == 200):
+        if company.status_code == 200:
             return company.json()
         else:
             return company.json()['message']
